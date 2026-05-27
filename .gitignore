@@ -1,0 +1,17 @@
+# 虚拟环境
+venv/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 环境变量文件（防止 API Key 泄露）
+.env
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 输出文件（可选，看你想不想追踪结果文件）
+# result.json
+# summaries.json
