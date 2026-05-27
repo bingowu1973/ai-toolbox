@@ -14,4 +14,4 @@ Thumbs.db
 
 # 输出文件（可选，看你想不想追踪结果文件）
 # result.json
-# summaries.json
+summaries.json
