@@ -12,6 +12,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# 输出文件（可选，看你想不想追踪结果文件）
+# 输出文件（可选看你想不想追踪结果文件）
 # result.json
 summaries.json
+# 系统文件
+.DS_Store
+Thumbs.db
