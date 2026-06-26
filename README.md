@@ -117,6 +117,11 @@ python main.py --mode extract --file sample.txt --output result.json
 
 --text 和 --file 二选一，必须提供其中一个。
 
+## 网页版使用
+
+```bash
+streamlit run app.py
+
 配置
 
 本项目使用 Kimi API（兼容 OpenAI 格式），需要配置 API Key。
