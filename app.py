@@ -41,7 +41,7 @@ with col2:
         st.session_state.summary_text = ""
         st.rerun()  # 重新运行，清空输入框
 # 功能选择标签页
-tab1, tab2, tab3 = st.tabs(["📝 摘要", "🔍 信息提取", "✏️ 风格改写"])
+tab1, tab2, tab3,tab4 = st.tabs(["📝 摘要", "🔍 信息提取", "✏️ 风格改写","📊 统计"])
 
 # ---- 标签页1：摘要 ----
 with tab1:
@@ -115,6 +115,28 @@ with tab3:
                     st.write(result)
                 except Exception as e:
                     st.error(f"出错了：{e}")
+with tab4:
+    st.subheader("字数统计")
+    text = st.text_area(
+        "输入要统计的文本",
+        height=200,
+        placeholder="把文本粘贴到这里，自动统计字数...",
+        key="count_text"
+    )
+    if st.button("统计字数", key="btn_count"):
+        if not text.strip():
+            st.warning("请先输入文本！")
+        else:
+           #统计单词数
+            st.write(f"单词数：{len(text.split())}")
+           #统计段落数
+            st.write(f"段落数：{len(text.split(chr(10)))}")#统计段落
+           #统计字符数，不含空格
+            st.write(f"字符数（不含空格）：{len(text.replace(' ', ''))}")
+           #统计字符数，含空格
+            st.write(f"字符数（含空格）：{len(text)}")
+
+
 # 处理完成后，把结果存入历史
 if 'result' in locals() and result:
     st.session_state.history.append({
