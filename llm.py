@@ -1,6 +1,7 @@
 # llm.py
 import os
 import json
+import time
 from openai import OpenAI
 
 client = OpenAI(
@@ -51,3 +52,42 @@ def call_llm_json(prompt, **kwargs):
         print("⚠️ JSON 解析失败，模型输出：")
         print(raw)
         return None
+
+def call_llm_tools(messages, tools, tool_choice="auto", model="moonshot-v1-8k", max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            response = client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    tools=tools,
+                    tool_choice=tool_choice
+                )
+
+            response_message = response.choices[0].message
+            tool_calls = []
+            
+            if response_message.tool_calls:
+                for tool_call in response_message.tool_calls:
+                    try:
+                        arguments = json.loads(tool_call.function.arguments)
+                    except json.JSONDecodeError:
+                        arguments = tool_call.function.arguments
+                    tool_calls.append({
+                        "id": tool_call.id, 
+                        "name": tool_call.function.name,
+                        "arguments": arguments
+                    })
+            
+            return {
+                    "content": response_message.content,
+                    "tool_calls": tool_calls
+            }
+
+        except Exception as e:
+            print(f"⚠️ 第{attempt+1}次调用失败：{e}")
+            if attempt == max_retries - 1:
+                return None  
+            # 等一会儿再重试
+            wait_time = 2 ** attempt
+            time.sleep(wait_time)
+    
