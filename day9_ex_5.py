@@ -14,7 +14,7 @@
 #用 ChatPromptTemplate 定义 prompt
 #用 JsonOutputParser 解析输出
 #用 LCEL 管道 | 组装成链
-测试至少 2 篇不同类型的文章
+#测试至少 2 篇不同类型的文章
  
 import os
 from typing import List
@@ -29,7 +29,7 @@ if not os.environ.get("MOONSHOT_API_KEY"):
 
 # 1. 定义模型（注意用Kimi的base_url和api_key）
 llm = ChatOpenAI(
-    model="moonshot-v1-8k", 
+    model="kimi-k3", 
     api_key=os.environ.get("MOONSHOT_API_KEY"),
     base_url="https://api.moonshot.cn/v1",
 )
